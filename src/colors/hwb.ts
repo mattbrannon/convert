@@ -12,7 +12,7 @@ function hwbToRgb(...hwb: number[]): number[] {
   let v = 1 - b;
   let n;
   if (!h) {
-    return [ v, v, v ];
+    return [ Math.round(v * 255), Math.round(v * 255), Math.round(v * 255) ];
   }
   else {
     const i = h | 0;
@@ -43,26 +43,18 @@ function hwbToRgb(...hwb: number[]): number[] {
   }
 }
 
-//  function hwbToHsv(...hwb: any[]) {
-//   hwb = hwb.flat();
-//   const [ h, w, b ] = hwb.map((n, i) => (i > 0 ? n / 100 : n));
-
-//   const s = 1 - w / (1 - b);
-//   const v = 1 - b;
-
-//   return [ h, Math.round(s * 100), Math.round(v * 100) ];
-// }
-
 function hwbToHsv(...hwb: number[]): number[] {
   hwb = hwb.flat();
-  const d = Math.abs(100 - (hwb[1] + hwb[2])) / 2;
-
-  const [ h, w, b ] = hwb.map((n, i) => {
-    return i === 0 ? n : n > 1 && i > 0 ? (n - d) / 100 : n;
+  let [ h, w, b ] = hwb.map((n, i) => {
+    return i === 0 ? n : i > 0 && n >= 1 ? n / 100 : n;
   });
 
-  const s = 1 - w / (1 - b);
+  const d = Math.max(w + b - 1, 0) / 2;
+  w -= d;
+  b -= d;
+
   const v = 1 - b;
+  const s = Math.max(1 - w / (1 - b), 0);
   return [ h, Math.round(s * 100), Math.round(v * 100) ];
 }
 
@@ -87,9 +79,6 @@ function hwbToLch(...hwb: number[]): number[] {
 }
 
 /// ////////////////////////
-
-// const normalize = (value: number, index: number) =>
-//   Math.round(index === 0 ? value * 360 : value * 100);
 
 export const hwb = {
   rgb: (...hwb: number[]) => hwbToRgb(...hwb),

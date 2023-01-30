@@ -111,7 +111,7 @@ export function rgbToHwb(...rgb: number[]): number[] {
   const v = Math.max(red, green, blue);
   const b = 1 - v;
 
-  if (v === w) return [ 0, w, b ];
+  if (v === w) return [ 0, Math.round(w * 100), Math.round(b * 100) ];
   const f = red === w ? green - blue : green === w ? blue - red : red - green;
   const i = red === w ? 3 : green === w ? 5 : 1;
 
