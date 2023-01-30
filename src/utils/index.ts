@@ -3,8 +3,9 @@ export const pipe =
     (input: any) =>
       fns.reduce((acc, callback) => callback(acc), input);
 
-const makeFloat = (decimal: number) => (value: number) =>
-  Math.round(value * decimal) / decimal;
+export const toFloat = (value: number) => {
+  return Math.round(value * 100) / 100;
+};
 
 export const toFloat = makeFloat(100);
 
@@ -18,12 +19,12 @@ export const isHex = (s: string) => {
   }
 };
 
-export const removePrefix = (prefix: string) => (s: string) => {
-  return s.charAt(0) === prefix ? s.slice(1) : s;
+export const removeHash = (s: string): string => {
+  return s.startsWith('#') ? s.slice(1) : s;
 };
 
-export const addPrefix = (prefix: string) => (s: string) => {
-  return s.charAt(0) !== prefix ? prefix + s : s;
+export const addHash = (s: string): string => {
+  return s.startsWith('#') ? s : '#' + s;
 };
 
 export const removeHash = removePrefix('#');
