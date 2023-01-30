@@ -16,7 +16,7 @@ function hwbToRgb(...hwb: number[]): number[] {
   }
   else {
     const i = h | 0;
-    const f = i & 1 ? 1 - h - i : h - i;
+    const f = i & 1 ? 1 - (h - i) : h - i;
 
     // f = h - i;
     // if (i & 1) f = 1 - f;
