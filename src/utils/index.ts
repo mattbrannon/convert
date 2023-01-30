@@ -8,7 +8,7 @@ const makeFloat = (decimal: number) => (value: number) =>
 
 export const toFloat = makeFloat(100);
 
-export const isHex = (s: any) => {
+export const isHex = (s: string) => {
   try {
     const re = /^#?([0-9A-F]{3,4}|[0-9A-F]{6}|[0-9A-F]{8})$/gi;
     return typeof s === 'string' && re.test(s);
