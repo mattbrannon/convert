@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/mattbrannon/convert/issues"
   },
-  "homepage": "https://github.com/mattbrannon/convert#readme"
+  "homepage": "https://github.com/mattbrannon/convert#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.32.0",
+    "prettier": "^2.8.3",
+    "rimraf": "^4.1.2",
+    "rollup": "^3.11.0",
+    "typescript": "^4.9.4"
+  }
 }
