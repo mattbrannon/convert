@@ -2,14 +2,17 @@
   "name": "@mattbrannon/convert",
   "version": "1.0.0",
   "description": "A set of color conversion functions ",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/",
     "README.md"
   ],
+  "browser": "./dist/index.umd.js",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs.js"
+  },
+  "sideEffects": false,
   "scripts": {
     "test": "jest",
     "build": "rimraf ./dist ./lib && tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs"
