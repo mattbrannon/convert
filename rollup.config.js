@@ -6,19 +6,24 @@ import pkg from './package.json';
 export default [
   {
     plugins: [ commonjs(), resolve(), terser() ],
-    input: 'lib/index.js',
+    input: 'dist/index.js',
     output: [
       {
-        name: 'convert',
+        dir: 'dist',
+        format: 'esm',
+        preserveModules: true,
+      },
+      {
+        exports: 'named',
+        file: pkg.exports.require,
+        format: 'cjs',
+      },
+      {
+        exports: 'named',
         file: pkg.browser,
         format: 'umd',
+        name: 'convert',
       },
-      { file: pkg.main, format: 'cjs', exports: 'named' },
-      { file: pkg.module, format: 'esm', exports: 'named' },
     ],
-    treeshake: {
-      preset: 'smallest',
-      moduleSideEffects: false,
-    },
   },
 ];
