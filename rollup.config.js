@@ -18,12 +18,6 @@ export default [
         file: pkg.exports.require,
         format: 'cjs',
       },
-      {
-        exports: 'named',
-        file: pkg.browser,
-        format: 'umd',
-        name: 'convert',
-      },
     ],
   },
 ];
