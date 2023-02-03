@@ -1,5 +1,7 @@
+/* eslint-disable prefer-const */
 import { pipe } from '../utils';
-import { rgbToHex, rgbToHwb, rgbToHsv, rgbToCmyk, rgbToLch } from './rgb';
+import { hsvToHwb } from './hsv';
+import { rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
 
 // Helper function
 function hue2rgb(p: number, q: number, t: number) {
@@ -48,8 +50,14 @@ function hslToHex(...hsl: number[]): string {
 }
 
 function hslToHsv(...hsl: number[]): number[] {
-  hsl = hsl.flat();
-  return pipe(hslToRgb, rgbToHsv)(hsl);
+  let [ h, s, l ] = hsl.flat(Infinity).map((n, i) => {
+    return i > 0 && n >= 1 ? n / 100 : n;
+  });
+
+  const v = s * Math.min(l, 1 - l) + l;
+  s = v ? 2 - (2 * l) / v : 0;
+
+  return [ h, Math.round(s * 100), Math.round(v * 100) ];
 }
 
 function hslToCmyk(...hsl: number[]): number[] {
@@ -59,7 +67,7 @@ function hslToCmyk(...hsl: number[]): number[] {
 
 function hslToHwb(...hsl: number[]): number[] {
   hsl = hsl.flat();
-  return pipe(hslToRgb, rgbToHwb)(hsl);
+  return pipe(hslToHsv, hsvToHwb)(hsl);
 }
 
 function hslToLch(...hsl: number[]): number[] {

@@ -1,81 +1,48 @@
 /* eslint-disable prefer-const */
 
 import { pipe } from '../utils';
-import { rgbToHsl, rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
-
-function hwbToRgb(...hwb: number[]): number[] {
-  hwb = hwb.flat();
-  let [ h, w, b ] = hwb.map((n, i) => {
-    return i === 0 ? (n / 360) * 6 : n / 100;
-  });
-
-  let v = 1 - b;
-  let n;
-  if (!h) {
-    return [ Math.round(v * 255), Math.round(v * 255), Math.round(v * 255) ];
-  }
-  else {
-    const i = h | 0;
-    const f = i & 1 ? 1 - (h - i) : h - i;
-
-    n = w + f * (v - w);
-    v = (v * 255) | 0;
-    n = (n * 255) | 0;
-    w = (w * 255) | 0;
-
-    switch (i) {
-      case 6:
-      case 0:
-        return [ v, n, w ];
-      case 1:
-        return [ n, v, w ];
-      case 2:
-        return [ w, v, n ];
-      case 3:
-        return [ w, n, v ];
-      case 4:
-        return [ n, w, v ];
-      case 5:
-        return [ v, w, n ];
-      default:
-        return [ 0, 0, 0 ];
-    }
-  }
-}
+import { hsvToRgb, hsvToHex, hsvToHsl, hsvToLch, hsvToCmyk } from './hsv';
 
 function hwbToHsv(...hwb: number[]): number[] {
-  hwb = hwb.flat();
-  let [ h, w, b ] = hwb.map((n, i) => {
-    return i === 0 ? n : i > 0 && n >= 1 ? n / 100 : n;
-  });
+  let [ h, w, b ] = hwb.flat(Infinity).map((n, i) => (i > 0 && n >= 1 ? n / 100 : n));
 
-  const d = Math.max(w + b - 1, 0) / 2;
-  w -= d;
-  b -= d;
+  if (w + b > 1) {
+    const d = (w + b - 1) / 2;
+    w = w - d;
+    b = b - d;
+  }
 
-  const v = 1 - b;
-  const s = Math.max(1 - w / (1 - b), 0);
-  return [ h, Math.round(s * 100), Math.round(v * 100) ];
+  let s = 1 - w / (1 - b) || 0;
+  let v = 1 - b;
+
+  s = Math.max(0, Math.min(Math.round(s * 100), 100));
+  v = Math.max(0, Math.min(Math.round(v * 100), 100));
+  return [ h, s, v ];
+}
+
+function hwbToRgb(...hwb: number[]): number[] {
+  hwb = hwb.flat(Infinity);
+  return pipe(hwbToHsv, hsvToRgb)(hwb);
 }
 
 function hwbToHex(...hwb: number[]): string {
   hwb = hwb.flat();
-  return pipe(hwbToRgb, rgbToHex)(hwb);
+  return pipe(hwbToHsv, hsvToHex)(hwb);
 }
 
 function hwbToHsl(...hwb: number[]): number[] {
   hwb = hwb.flat();
-  return pipe(hwbToRgb, rgbToHsl)(hwb);
+  return pipe(hwbToHsv, hsvToHsl)(hwb);
 }
 
 function hwbToCmyk(...hwb: number[]): number[] {
   hwb = hwb.flat();
-  return pipe(hwbToRgb, rgbToCmyk)(hwb);
+  return pipe(hwbToHsv, hsvToCmyk)(hwb);
 }
 
 function hwbToLch(...hwb: number[]): number[] {
   hwb = hwb.flat();
-  return pipe(hwbToRgb, rgbToLch)(hwb);
+  return pipe(hwbToHsv, hsvToLch)(hwb);
 }
 
 /// ////////////////////////

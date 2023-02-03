@@ -1,6 +1,9 @@
+/* eslint-disable prefer-const */
+
 import { pipe } from '../utils';
-import { rgbToHsl, rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
-function hsvToRgb(...hsv: number[]): number[] {
+import { rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
+
+export function hsvToRgb(...hsv: number[]): number[] {
   hsv = hsv.flat();
   let r: number = 0;
   let g: number = 0;
@@ -49,22 +52,29 @@ function hsvToRgb(...hsv: number[]): number[] {
   return a ? [ r, g, b, a ] : [ r, g, b ];
 }
 
-function hsvToHex(...hsv: number[]): string {
+export function hsvToHex(...hsv: number[]): string {
   hsv = hsv.flat();
   return pipe(hsvToRgb, rgbToHex)(hsv);
 }
 
-function hsvToHsl(...hsv: number[]): number[] {
-  hsv = hsv.flat();
-  return pipe(hsvToRgb, rgbToHsl)(hsv);
+export function hsvToHsl(...hsv: number[]): number[] {
+  hsv = hsv.flat(Infinity);
+  let [ h, s, v ] = hsv.map((n, i) => (i > 0 && n >= 1 ? n / 100 : n));
+  const l = v - (v * s) / 2;
+  const m = Math.min(l, 1 - l);
+  s = m ? (v - l) / m : 0;
+  const hue = h;
+  const saturation = Math.min(Math.max(0, Math.round(s * 100)), 100);
+  const lightness = Math.min(Math.max(0, Math.round(l * 100)), 100);
+  return [ hue, saturation, lightness ];
 }
 
-function hsvToCmyk(...hsv: number[]): number[] {
+export function hsvToCmyk(...hsv: number[]): number[] {
   hsv = hsv.flat();
   return pipe(hsvToRgb, rgbToCmyk)(hsv);
 }
 
-function hsvToHwb(...hsv: number[]): number[] {
+export function hsvToHwb(...hsv: number[]): number[] {
   hsv = hsv.flat();
   const [ h, s, v ] = hsv.map((n, i) => {
     return i === 0 ? n : n > 1 && i > 0 ? n / 100 : n;
@@ -74,7 +84,7 @@ function hsvToHwb(...hsv: number[]): number[] {
   return [ h, Math.round(w * 100), Math.round(b * 100) ];
 }
 
-function hsvToLch(...hsv: number[]): number[] {
+export function hsvToLch(...hsv: number[]): number[] {
   hsv = hsv.flat();
   return pipe(hsvToRgb, rgbToLch)(hsv);
 }
