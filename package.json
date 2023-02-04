@@ -8,13 +8,13 @@
     "README.md"
   ],
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs.js"
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "sideEffects": false,
   "scripts": {
     "test": "jest",
-    "build": "rimraf ./dist ./lib && tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs"
+    "build": "rimraf ./dist && tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs && rimraf ./compiled"
   },
   "repository": {
     "type": "git",
