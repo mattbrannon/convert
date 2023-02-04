@@ -1,0 +1,5 @@
+---
+"@mattbrannon/convert": patch
+---
+
+In the previous version, when converting between HSV, HWB, and HSL color spaces, each color space would be converted to RGB as an intermediate step. This causes problems as we lose any information about the hue when the saturation is 0. This version ensures that when an intermediate step is used, the hue is retained throughout from start to finish.
