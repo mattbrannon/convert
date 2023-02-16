@@ -8,5 +8,3 @@ export const convert = {
   ...angles,
   ...colors,
 };
-
-export default convert;
