@@ -1,6 +1,6 @@
 {
   "name": "@mattbrannon/convert",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A set of color conversion functions ",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/mattbrannon/convert.git"
   },
   "author": "Matt Brannon",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mattbrannon/convert/issues"
   },
