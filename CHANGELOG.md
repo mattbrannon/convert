@@ -1,5 +1,11 @@
 # @mattbrannon/convert
 
+## 2.0.0
+
+### Major Changes
+
+- Removed default export in favor of named exports only.
+
 ## 1.0.2
 
 ### Patch Changes
