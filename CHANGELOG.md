@@ -1,5 +1,11 @@
 # @mattbrannon/convert
 
+## 1.0.2
+
+### Patch Changes
+
+- Add MIT License
+
 ## 1.0.1
 
 ### Patch Changes
