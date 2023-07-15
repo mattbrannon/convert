@@ -10,6 +10,9 @@
   },
   "parser": "@typescript-eslint/parser",
   "rules": {
+    "no-var": "error",
+    "prefer-const": "error",
+    "quotes": ["error", "single"],
     "brace-style": ["error", "stroustrup"],
     "semi": ["error", "always"],
     "space-before-function-paren": "off",

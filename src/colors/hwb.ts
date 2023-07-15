@@ -48,10 +48,10 @@ function hwbToLch(...hwb: number[]): number[] {
 /// ////////////////////////
 
 export const hwb = {
-  rgb: (...hwb: number[]) => hwbToRgb(...hwb),
-  hex: (...hwb: number[]) => hwbToHex(...hwb),
-  hsl: (...hwb: number[]) => hwbToHsl(...hwb),
-  hsv: (...hwb: number[]) => hwbToHsv(...hwb),
-  cmyk: (...hwb: number[]) => hwbToCmyk(...hwb),
-  lch: (...hwb: number[]) => hwbToLch(...hwb),
+  rgb: (...hwb: (number | number[])[]) => hwbToRgb(...hwb.flat()),
+  hex: (...hwb: (number | number[])[]) => hwbToHex(...hwb.flat()),
+  hsl: (...hwb: (number | number[])[]) => hwbToHsl(...hwb.flat()),
+  hsv: (...hwb: (number | number[])[]) => hwbToHsv(...hwb.flat()),
+  cmyk: (...hwb: (number | number[])[]) => hwbToCmyk(...hwb.flat()),
+  lch: (...hwb: (number | number[])[]) => hwbToLch(...hwb.flat()),
 };

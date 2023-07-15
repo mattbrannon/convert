@@ -40,10 +40,3 @@ export const turn = {
   gradian: (n: number) => turnToGradian(n),
   degree: (n: number) => turnToDegree(n),
 };
-
-export const angles = {
-  radian,
-  gradian,
-  degree,
-  turn,
-};
