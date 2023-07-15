@@ -1,4 +1,4 @@
-const { convert } = require('../src');
+const convert = require('../src');
 
 const values = {
   rgb: [ 255, 0, 255 ],

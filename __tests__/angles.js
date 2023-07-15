@@ -1,4 +1,4 @@
-const { convert } = require('../src');
+const convert = require('../src');
 
 const values = {
   degree: 270,
