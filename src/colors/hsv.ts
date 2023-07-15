@@ -90,10 +90,10 @@ export function hsvToLch(...hsv: number[]): number[] {
 }
 
 export const hsv = {
-  rgb: (...hsv: number[]) => hsvToRgb(...hsv),
-  hsl: (...hsv: number[]) => hsvToHsl(...hsv),
-  hwb: (...hsv: number[]) => hsvToHwb(...hsv), // ,
-  hex: (...hsv: number[]) => hsvToHex(...hsv),
-  cmyk: (...hsv: number[]) => hsvToCmyk(...hsv),
-  lch: (...hsv: number[]) => hsvToLch(...hsv),
+  rgb: (...hsv: (number | number[])[]) => hsvToRgb(...hsv.flat()),
+  hsl: (...hsv: (number | number[])[]) => hsvToHsl(...hsv.flat()),
+  hwb: (...hsv: (number | number[])[]) => hsvToHwb(...hsv.flat()),
+  hex: (...hsv: (number | number[])[]) => hsvToHex(...hsv.flat()),
+  cmyk: (...hsv: (number | number[])[]) => hsvToCmyk(...hsv.flat()),
+  lch: (...hsv: (number | number[])[]) => hsvToLch(...hsv.flat()),
 };

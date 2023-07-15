@@ -76,10 +76,10 @@ function hslToLch(...hsl: number[]): number[] {
 }
 
 export const hsl = {
-  rgb: (...hsl: number[]) => hslToRgb(...hsl),
-  hsv: (...hsl: number[]) => hslToHsv(...hsl),
-  hwb: (...hsl: number[]) => hslToHwb(...hsl),
-  hex: (...hsl: number[]) => hslToHex(...hsl),
-  cmyk: (...hsl: number[]) => hslToCmyk(...hsl),
-  lch: (...hsl: number[]) => hslToLch(...hsl),
+  rgb: (...hsl: (number | number[])[]) => hslToRgb(...hsl.flat()),
+  hsv: (...hsl: (number | number[])[]) => hslToHsv(...hsl.flat()),
+  hwb: (...hsl: (number | number[])[]) => hslToHwb(...hsl.flat()),
+  hex: (...hsl: (number | number[])[]) => hslToHex(...hsl.flat()),
+  cmyk: (...hsl: (number | number[])[]) => hslToCmyk(...hsl.flat()),
+  lch: (...hsl: (number | number[])[]) => hslToLch(...hsl.flat()),
 };

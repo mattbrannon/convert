@@ -38,10 +38,10 @@ function cmykToLch(...cmyk: number[]): number[] {
 }
 
 export const cmyk = {
-  rgb: (...cmyk: number[]) => cmykToRgb(...cmyk),
-  hsl: (...cmyk: number[]) => cmykToHsl(...cmyk),
-  hwb: (...cmyk: number[]) => cmykToHwb(...cmyk),
-  hsv: (...cmyk: number[]) => cmykToHsv(...cmyk),
-  hex: (...cmyk: number[]) => cmykToHex(...cmyk),
-  lch: (...cmyk: number[]) => cmykToLch(...cmyk),
+  rgb: (...cmyk: (number | number[])[]) => cmykToRgb(...cmyk.flat()),
+  hsl: (...cmyk: (number | number[])[]) => cmykToHsl(...cmyk.flat()),
+  hwb: (...cmyk: (number | number[])[]) => cmykToHwb(...cmyk.flat()),
+  hsv: (...cmyk: (number | number[])[]) => cmykToHsv(...cmyk.flat()),
+  hex: (...cmyk: (number | number[])[]) => cmykToHex(...cmyk.flat()),
+  lch: (...cmyk: (number | number[])[]) => cmykToLch(...cmyk.flat()),
 };

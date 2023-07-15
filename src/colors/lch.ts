@@ -72,10 +72,10 @@ function lchToCmyk(...lch: number[]): number[] {
 }
 
 export const lch = {
-  rgb: (...lch: number[]) => lchToRgb(...lch),
-  hex: (...lch: number[]) => lchToHex(...lch),
-  hsl: (...lch: number[]) => lchToHsl(...lch),
-  hwb: (...lch: number[]) => lchToHwb(...lch),
-  hsv: (...lch: number[]) => lchToHsv(...lch),
-  cmyk: (...lch: number[]) => lchToCmyk(...lch),
+  rgb: (...lch: (number | number[])[]) => lchToRgb(...lch.flat()),
+  hex: (...lch: (number | number[])[]) => lchToHex(...lch.flat()),
+  hsl: (...lch: (number | number[])[]) => lchToHsl(...lch.flat()),
+  hwb: (...lch: (number | number[])[]) => lchToHwb(...lch.flat()),
+  hsv: (...lch: (number | number[])[]) => lchToHsv(...lch.flat()),
+  cmyk: (...lch: (number | number[])[]) => lchToCmyk(...lch.flat()),
 };

@@ -159,10 +159,10 @@ export function rgbToLch(...rgb: number[]): number[] {
 }
 
 export const rgb = {
-  hex: (...rgb: number[]) => rgbToHex(...rgb),
-  hsl: (...rgb: number[]) => rgbToHsl(...rgb),
-  hsv: (...rgb: number[]) => rgbToHsv(...rgb),
-  hwb: (...rgb: number[]) => rgbToHwb(...rgb),
-  lch: (...rgb: number[]) => rgbToLch(...rgb),
-  cmyk: (...rgb: number[]) => rgbToCmyk(...rgb),
+  hex: (...rgb: (number | number[])[]) => rgbToHex(...rgb.flat()),
+  hsl: (...rgb: (number | number[])[]) => rgbToHsl(...rgb.flat()),
+  hsv: (...rgb: (number | number[])[]) => rgbToHsv(...rgb.flat()),
+  hwb: (...rgb: (number | number[])[]) => rgbToHwb(...rgb.flat()),
+  lch: (...rgb: (number | number[])[]) => rgbToLch(...rgb.flat()),
+  cmyk: (...rgb: (number | number[])[]) => rgbToCmyk(...rgb.flat()),
 };
