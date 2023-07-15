@@ -15,6 +15,7 @@
   "scripts": {
     "test": "jest",
     "build": "rm -rf ./dist && tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs && rm -rf ./compiled",
+    "build:test": "tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs && npm test",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish"
