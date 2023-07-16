@@ -8,8 +8,10 @@
     "README.md"
   ],
   "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.cjs",
+    "default": "./dist/umd/index.js"
   },
   "sideEffects": false,
   "scripts": {
