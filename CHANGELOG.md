@@ -1,5 +1,11 @@
 # @mattbrannon/convert
 
+## 2.0.1
+
+### Patch Changes
+
+- Fix esm import errors. Package should now actually support both ESM and CJS. Unlike before when we said we did but really we didn't. Let's hope anyways.
+
 ## 2.0.0
 
 ### Major Changes

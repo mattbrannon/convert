@@ -1,6 +1,6 @@
 {
   "name": "@mattbrannon/convert",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A set of color conversion functions ",
   "types": "dist/types/index.d.ts",
   "files": [
