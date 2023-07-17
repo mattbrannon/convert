@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+    - run: npm pkg delete scripts.prepare
     - run: yarn install
     - run: yarn build
     - run: yarn test
