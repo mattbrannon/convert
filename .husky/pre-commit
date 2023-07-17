@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+branch=$(git branch --show-current)
+if [[ $branch == "main" ]]; then
+  echo "You are on main branch, please create a new branch and commit again"
+  exit 1
+fi
+
+npm test
