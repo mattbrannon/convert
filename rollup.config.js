@@ -7,12 +7,18 @@ import pkg from './package.json';
 export default [
   {
     plugins: [ commonjs(), resolve(), terser() ],
-    input: 'compiled/index.js',
+    input: 'compiled/index.esm.js',
     output: [
       {
         format: 'esm',
         file: pkg.exports.import,
       },
+    ],
+  },
+  {
+    plugins: [ commonjs(), resolve(), terser() ],
+    input: 'compiled/index.cjs.js',
+    output: [
       {
         format: 'cjs',
         file: pkg.exports.require,

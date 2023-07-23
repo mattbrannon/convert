@@ -1,5 +1,11 @@
 # @mattbrannon/convert
 
+## 2.1.0
+
+### Minor Changes
+
+- Added an identity function in each angle converter. Changed the build process to include separate esm and cjs inputs. Now instead of a single index.ts file exporting everything, there is an index.esm.ts and an index.cjs.ts.
+
 ## 2.0.1
 
 ### Patch Changes

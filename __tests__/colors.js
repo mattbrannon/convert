@@ -1,4 +1,4 @@
-const convert = require('../src');
+const convert = require('../src/index.cjs');
 
 const values = {
   rgb: [ 255, 0, 255 ],
@@ -28,10 +28,14 @@ describe('color conversion', () => {
         .filter((currentFormat) => currentFormat !== format)
         .forEach((colorSpace) => {
           test(`converts ${format} to ${colorSpace}`, () => {
-            expect(convert[format][colorSpace](values[format])).toEqual(values[colorSpace]);
+            expect(convert[format][colorSpace](values[format])).toEqual(
+              values[colorSpace]
+            );
           });
           test(`converts ${format} to ${colorSpace} GREYSCALE`, () => {
-            expect(convert[format][colorSpace](greyscale[format])).toEqual(greyscale[colorSpace]);
+            expect(convert[format][colorSpace](greyscale[format])).toEqual(
+              greyscale[colorSpace]
+            );
           });
         });
     });
