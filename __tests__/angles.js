@@ -1,4 +1,4 @@
-const convert = require('../src');
+const convert = require('../src/index.cjs');
 
 const values = {
   degree: 270,
@@ -15,7 +15,9 @@ describe('angle conversion', () => {
         .filter((currentFormat) => currentFormat !== format)
         .forEach((angleSpace) => {
           test(`converts ${format} to ${angleSpace}`, () => {
-            expect(convert[format][angleSpace](values[format])).toEqual(values[angleSpace]);
+            expect(convert[format][angleSpace](values[format])).toEqual(
+              values[angleSpace]
+            );
           });
         });
     });
