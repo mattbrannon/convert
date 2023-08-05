@@ -1,4 +1,6 @@
-import { toFloat } from '../utils';
+import { toFloat, pipe, keepHueInRange } from '../utils';
+import { xyzToLab } from './xyz';
+import { labToLch } from './lab';
 
 export function rgbToCmyk(...rgb: number[]): number[] {
   rgb = rgb.flat();
@@ -13,7 +15,9 @@ export function rgbToCmyk(...rgb: number[]): number[] {
 
 export function rgbToHex(...rgb: number[]): string {
   rgb = rgb.flat();
-  const [ r, g, b ] = rgb.map((val) => val.toString(16)).map((s) => s.padStart(2, '0'));
+  const [ r, g, b ] = rgb
+    .map((val) => val.toString(16))
+    .map((s) => s.padStart(2, '0'));
   const alpha = rgb[3];
 
   if (alpha) {
@@ -119,43 +123,32 @@ export function rgbToHwb(...rgb: number[]): number[] {
   const white = Math.round(w * 100);
   const black = Math.round(b * 100);
 
-  return [ hue, white, black ];
+  return [ keepHueInRange(hue), white, black ];
 }
 
-export function rgbToLch(...rgb: number[]): number[] {
+export function rgbToXyz(...rgb: number[]) {
   rgb = rgb.flat();
-  let [ r, g, b ] = rgb.map((c) => c / 255);
+  const [ r, g, b ] = rgb;
+  const [ r1, g1, b1 ] = [ r / 255, g / 255, b / 255 ];
+  const [ r2, g2, b2 ] = [
+    r1 > 0.04045 ? Math.pow((r1 + 0.055) / 1.055, 2.4) : r1 / 12.92,
+    g1 > 0.04045 ? Math.pow((g1 + 0.055) / 1.055, 2.4) : g1 / 12.92,
+    b1 > 0.04045 ? Math.pow((b1 + 0.055) / 1.055, 2.4) : b1 / 12.92,
+  ];
+  const [ x, y, z ] = [
+    r2 * 0.4124 + g2 * 0.3576 + b2 * 0.1805,
+    r2 * 0.2126 + g2 * 0.7152 + b2 * 0.0722,
+    r2 * 0.0193 + g2 * 0.1192 + b2 * 0.9505,
+  ];
+  return [ x * 100, y * 100, z * 100 ];
+}
 
-  // Gamma correction
-  r = r > 0.04045 ? ((r + 0.055) / 1.055) ** 2.4 : r / 12.92;
-  g = g > 0.04045 ? ((g + 0.055) / 1.055) ** 2.4 : g / 12.92;
-  b = b > 0.04045 ? ((b + 0.055) / 1.055) ** 2.4 : b / 12.92;
+function rgbToLab(...rgb: number[]) {
+  return pipe(rgbToXyz, xyzToLab)(rgb.flat());
+}
 
-  // Convert RGB to XYZ
-  const x = 0.4124 * r + 0.3576 * g + 0.1805 * b;
-  const y = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  const z = 0.0193 * r + 0.1192 * g + 0.9505 * b;
-
-  // Convert XYZ to LAB
-  const xn = 0.95047;
-  const yn = 1.0;
-  const zn = 1.08883;
-  let fx = x / xn;
-  let fy = y / yn;
-  let fz = z / zn;
-  fx = fx > 0.008856 ? fx ** (1 / 3) : 7.787 * fx + 16 / 116;
-  fy = fy > 0.008856 ? fy ** (1 / 3) : 7.787 * fy + 16 / 116;
-  fz = fz > 0.008856 ? fz ** (1 / 3) : 7.787 * fz + 16 / 116;
-
-  const L = 116 * fy - 16;
-  const A = 500 * (fx - fy);
-  const B = 200 * (fy - fz);
-
-  // Convert LAB to LCH
-  const C = Math.sqrt(A ** 2 + B ** 2);
-  const H = Math.atan2(B, A) * (180 / Math.PI);
-
-  return [ L, C, H ];
+export function rgbToLch(...rgb: number[]) {
+  return pipe(rgbToXyz, xyzToLab, labToLch)(rgb.flat());
 }
 
 export const rgb = {
@@ -165,4 +158,6 @@ export const rgb = {
   hwb: (...rgb: (number | number[])[]) => rgbToHwb(...rgb.flat()),
   lch: (...rgb: (number | number[])[]) => rgbToLch(...rgb.flat()),
   cmyk: (...rgb: (number | number[])[]) => rgbToCmyk(...rgb.flat()),
+  xyz: (...rgb: (number | number[])[]) => rgbToXyz(...rgb.flat()),
+  lab: (...rgb: (number | number[])[]) => rgbToLab(...rgb.flat()),
 };

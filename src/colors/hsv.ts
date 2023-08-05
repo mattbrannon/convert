@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
 
 import { pipe } from '../utils';
-import { rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
+import { rgbToHex, rgbToCmyk, rgbToLch, rgbToXyz } from './rgb';
+import { xyzToLab } from './xyz';
 
 export function hsvToRgb(...hsv: number[]): number[] {
   hsv = hsv.flat();
@@ -53,8 +54,7 @@ export function hsvToRgb(...hsv: number[]): number[] {
 }
 
 export function hsvToHex(...hsv: number[]): string {
-  hsv = hsv.flat();
-  return pipe(hsvToRgb, rgbToHex)(hsv);
+  return pipe(hsvToRgb, rgbToHex)(hsv.flat());
 }
 
 export function hsvToHsl(...hsv: number[]): number[] {
@@ -70,8 +70,7 @@ export function hsvToHsl(...hsv: number[]): number[] {
 }
 
 export function hsvToCmyk(...hsv: number[]): number[] {
-  hsv = hsv.flat();
-  return pipe(hsvToRgb, rgbToCmyk)(hsv);
+  return pipe(hsvToRgb, rgbToCmyk)(hsv.flat());
 }
 
 export function hsvToHwb(...hsv: number[]): number[] {
@@ -85,8 +84,15 @@ export function hsvToHwb(...hsv: number[]): number[] {
 }
 
 export function hsvToLch(...hsv: number[]): number[] {
-  hsv = hsv.flat();
-  return pipe(hsvToRgb, rgbToLch)(hsv);
+  return pipe(hsvToRgb, rgbToLch)(hsv.flat());
+}
+
+function hsvToXyz(...hsv: number[]): number[] {
+  return pipe(hsvToRgb, rgbToXyz)(hsv.flat());
+}
+
+function hsvToLab(...hsv: number[]): number[] {
+  return pipe(hsvToRgb, rgbToXyz, xyzToLab)(hsv.flat());
 }
 
 export const hsv = {
@@ -96,4 +102,6 @@ export const hsv = {
   hex: (...hsv: (number | number[])[]) => hsvToHex(...hsv.flat()),
   cmyk: (...hsv: (number | number[])[]) => hsvToCmyk(...hsv.flat()),
   lch: (...hsv: (number | number[])[]) => hsvToLch(...hsv.flat()),
+  xyz: (...hsv: (number | number[])[]) => hsvToXyz(...hsv.flat()),
+  lab: (...hsv: (number | number[])[]) => hsvToLab(...hsv.flat()),
 };

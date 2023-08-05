@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
 import { pipe } from '../utils';
 import { hsvToHwb } from './hsv';
-import { rgbToHex, rgbToCmyk, rgbToLch } from './rgb';
+import { rgbToHex, rgbToCmyk, rgbToLch, rgbToXyz } from './rgb';
+import { xyzToLab } from './xyz';
 
 // Helper function
 function hue2rgb(p: number, q: number, t: number) {
@@ -45,8 +46,7 @@ function hslToRgb(...hsl: number[]): number[] {
 }
 
 function hslToHex(...hsl: number[]): string {
-  hsl = hsl.flat();
-  return pipe(hslToRgb, rgbToHex)(hsl);
+  return pipe(hslToRgb, rgbToHex)(hsl.flat());
 }
 
 function hslToHsv(...hsl: number[]): number[] {
@@ -61,18 +61,23 @@ function hslToHsv(...hsl: number[]): number[] {
 }
 
 function hslToCmyk(...hsl: number[]): number[] {
-  hsl = hsl.flat();
-  return pipe(hslToRgb, rgbToCmyk)(hsl);
+  return pipe(hslToRgb, rgbToCmyk)(hsl.flat());
 }
 
 function hslToHwb(...hsl: number[]): number[] {
-  hsl = hsl.flat();
-  return pipe(hslToHsv, hsvToHwb)(hsl);
+  return pipe(hslToHsv, hsvToHwb)(hsl.flat());
 }
 
 function hslToLch(...hsl: number[]): number[] {
-  hsl = hsl.flat();
-  return pipe(hslToRgb, rgbToLch)(hsl);
+  return pipe(hslToRgb, rgbToLch)(hsl.flat());
+}
+
+function hslToXyz(...hsl: number[]): number[] {
+  return pipe(hslToRgb, rgbToXyz)(hsl.flat());
+}
+
+function hslToLab(...hsl: number[]): number[] {
+  return pipe(hslToRgb, rgbToXyz, xyzToLab)(hsl.flat());
 }
 
 export const hsl = {
@@ -82,4 +87,6 @@ export const hsl = {
   hex: (...hsl: (number | number[])[]) => hslToHex(...hsl.flat()),
   cmyk: (...hsl: (number | number[])[]) => hslToCmyk(...hsl.flat()),
   lch: (...hsl: (number | number[])[]) => hslToLch(...hsl.flat()),
+  xyz: (...hsl: (number | number[])[]) => hslToXyz(...hsl.flat()),
+  lab: (...hsl: (number | number[])[]) => hslToLab(...hsl.flat()),
 };

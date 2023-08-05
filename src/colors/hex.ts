@@ -1,4 +1,5 @@
-import { rgbToHsl, rgbToHwb, rgbToHsv, rgbToCmyk, rgbToLch } from './rgb';
+import { rgbToHsl, rgbToHwb, rgbToHsv, rgbToCmyk, rgbToLch, rgbToXyz } from './rgb';
+import { xyzToLab } from './xyz';
 import { pipe, removeHash, makeLong, toFloat } from '../utils';
 
 function hexToRgb(hex: string): number[] {
@@ -31,6 +32,14 @@ function hexToLch(hex: string): number[] {
   return pipe(hexToRgb, rgbToLch)(hex);
 }
 
+function hexToXyz(hex: string): number[] {
+  return pipe(hexToRgb, rgbToXyz)(hex);
+}
+
+function hexToLab(hex: string): number[] {
+  return pipe(hexToRgb, rgbToXyz, xyzToLab)(hex);
+}
+
 export const hex = {
   rgb: (hex: string) => hexToRgb(hex),
   hsl: (hex: string) => hexToHsl(hex),
@@ -38,4 +47,6 @@ export const hex = {
   hsv: (hex: string) => hexToHsv(hex),
   cmyk: (hex: string) => hexToCmyk(hex),
   lch: (hex: string) => hexToLch(hex),
+  xyz: (hex: string) => hexToXyz(hex),
+  lab: (hex: string) => hexToLab(hex),
 };
