@@ -31,7 +31,7 @@
       {
         "arraysInArrays": false,
         "objectsInArrays": false,
-        "singleValue": false
+        "singleValue": true
       }
     ],
     "no-unneeded-ternary": "error",

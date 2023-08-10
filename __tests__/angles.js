@@ -1,4 +1,4 @@
-const convert = require('../src/index.cjs');
+import convert from '../src';
 
 const values = {
   degree: 270,

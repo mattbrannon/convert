@@ -3,5 +3,7 @@ export { hex } from './hex';
 export { hsl } from './hsl';
 export { hsv } from './hsv';
 export { hwb } from './hwb';
+export { lab } from './lab';
 export { lch } from './lch';
 export { rgb } from './rgb';
+export { xyz } from './xyz';

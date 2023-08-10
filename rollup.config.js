@@ -1,33 +1,39 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
-
 import pkg from './package.json';
+
+const commonPlugins = [ resolve(), commonjs() ];
+
+const plugins =
+  process.env.NODE_ENV === 'production'
+    ? [ ...commonPlugins, terser() ]
+    : commonPlugins;
 
 export default [
   {
-    plugins: [ commonjs(), resolve(), terser() ],
-    input: 'compiled/index.esm.js',
+    input: './compiled/index.js',
     output: [
       {
-        format: 'esm',
-        file: pkg.exports.import,
-      },
-    ],
-  },
-  {
-    plugins: [ commonjs(), resolve(), terser() ],
-    input: 'compiled/index.cjs.js',
-    output: [
-      {
+        file: pkg.exports['.'].require,
         format: 'cjs',
-        file: pkg.exports.require,
       },
       {
+        file: pkg.exports['.'].default,
         format: 'umd',
         name: 'convert',
-        file: pkg.exports.default,
       },
     ],
+    plugins,
+  },
+  {
+    input: './compiled/index.esm.js',
+    output: {
+      dir: 'dist/esm',
+      // file: pkg.exports['.'].import,
+      format: 'esm',
+      preserveModules: true,
+    },
+    plugins,
   },
 ];

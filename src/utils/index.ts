@@ -39,3 +39,13 @@ export const makeLong = (s: string): string => {
   }
   return addHash(s);
 };
+
+export const keepHueInRange = (n: number) => {
+  while (n >= 360) {
+    n -= 360;
+  }
+  while (n < 0) {
+    n += 360;
+  }
+  return n;
+};

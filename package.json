@@ -8,16 +8,17 @@
     "README.md"
   ],
   "exports": {
-    "types": "./dist/types/index.d.ts",
-    "import": "./dist/esm/index.mjs",
-    "require": "./dist/cjs/index.cjs",
-    "default": "./dist/umd/index.js"
+    ".": {
+      "import": "./dist/esm/index.esm.mjs",
+      "require": "./dist/cjs/index.cjs",
+      "default": "./dist/umd/index.js"
+    }
   },
   "sideEffects": false,
   "scripts": {
     "test": "jest",
-    "build": "rm -rf ./dist && tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs && rm -rf ./compiled",
-    "build:test": "tsc -p tsconfig.json && rollup -c --bundleConfigAsCjs && npm test",
+    "build": "./scripts/build -P",
+    "build:dev": "./scripts/build -D",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
