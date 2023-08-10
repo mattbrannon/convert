@@ -1,5 +1,12 @@
 import { pipe } from '../utils';
-import { rgbToHsl, rgbToHex, rgbToHwb, rgbToHsv, rgbToCmyk, rgbToLch } from './rgb';
+import {
+  rgbToHsl,
+  rgbToHex,
+  rgbToHwb,
+  rgbToHsv,
+  rgbToCmyk,
+  rgbToLch,
+} from './rgb';
 
 export function xyzToLab(...xyz: (number | number[])[]) {
   // Define the reference white values for D65 illuminant
@@ -20,7 +27,8 @@ export function xyzToLab(...xyz: (number | number[])[]) {
     return t > 0.008856 ? Math.pow(t, 1 / 3) : 7.787 * t + 16 / 116;
   }
 
-  const L = YnNormalized > 0.008856 ? 116 * f(YnNormalized) - 16 : 903.3 * YnNormalized;
+  const L =
+    YnNormalized > 0.008856 ? 116 * f(YnNormalized) - 16 : 903.3 * YnNormalized;
   const a = 500 * (f(XnNormalized) - f(YnNormalized));
   const b = 200 * (f(YnNormalized) - f(ZnNormalized));
 
@@ -36,7 +44,9 @@ export function xyzToRgb(...xyz: number[]) {
 
   // Gamma correction and clamping
   const gammaCorrection = (value: number) => {
-    return value > 0.0031308 ? 1.055 * Math.pow(value, 1 / 2.4) - 0.055 : 12.92 * value;
+    return value > 0.0031308
+      ? 1.055 * Math.pow(value, 1 / 2.4) - 0.055
+      : 12.92 * value;
   };
 
   r = gammaCorrection(r);

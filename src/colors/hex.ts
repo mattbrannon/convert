@@ -1,4 +1,11 @@
-import { rgbToHsl, rgbToHwb, rgbToHsv, rgbToCmyk, rgbToLch, rgbToXyz } from './rgb';
+import {
+  rgbToHsl,
+  rgbToHwb,
+  rgbToHsv,
+  rgbToCmyk,
+  rgbToLch,
+  rgbToXyz,
+} from './rgb';
 import { xyzToLab } from './xyz';
 import { pipe, removeHash, makeLong, toFloat } from '../utils';
 
