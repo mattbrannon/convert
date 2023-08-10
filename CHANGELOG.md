@@ -1,5 +1,11 @@
 # @mattbrannon/convert
 
+## 2.2.0
+
+### Minor Changes
+
+- Adds support for XYZ and LAB color spaces.
+
 ## 2.1.0
 
 ### Minor Changes
