@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+buildEnv="development"
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+  -P | --production) buildEnv="production" ;;
+  -D | --development) buildEnv="development" ;;
+  *) echo "Unknown parameter passed: $1" ;;
+  esac
+  shift
+done
+
+echo "using $buildEnv environment" >&2
+
+rm -rf ./dist &&
+  node ./scripts/createEsmFile.js &&
+  node_modules/.bin/tsc -p ./tsconfig.json &&
+  NODE_ENV="$buildEnv" node_modules/.bin/rollup -c --bundleConfigAsCjs &&
+  node ./scripts/rename.js &&
+  rm -rf ./compiled ./src/index.esm.ts ./dist/types/index.esm.d.ts
